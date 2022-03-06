@@ -1,29 +1,29 @@
 <?php
 include '../lib/session.php';
-include '../classes/product.php';
-Session::checkSession('admin');
+include '../classes/staff.php';
+Session::checkSession('manager');
 $role_id = Session::get('role_id');
-if ($role_id == 1) {
+if ($role_id == 4) {
     # code...
 } else {
     header("Location:../index.php");
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $product = new product();
+    $staff = new staff();
     if (isset($_POST['block'])) {
-        $result = $product->block($_POST['id']);
+        $result = $staff->block($_POST['id']);
         if ($result) {
-            echo '<script type="text/javascript">alert("Khóa sản phẩm thành công!");</script>';
+            echo '<script type="text/javascript">alert("Khóa nhân viên thành công!");</script>';
         } else {
-            echo '<script type="text/javascript">alert("Khóa sản phẩm thất bại!");</script>';
+            echo '<script type="text/javascript">alert("Khóa nhân viên thất bại!");</script>';
         }
     } else if (isset($_POST['active'])) {
-        $result = $product->active($_POST['id']);
+        $result = $staff->active($_POST['id']);
         if ($result) {
-            echo '<script type="text/javascript">alert("Kích hoạt sản phẩm thành công!");</script>';
+            echo '<script type="text/javascript">alert("Kích hoạt nhân viên thành công!");</script>';
         } else {
-            echo '<script type="text/javascript">alert("Kích hoạt sản phẩm thất bại!");</script>';
+            echo '<script type="text/javascript">alert("Kích hoạt nhân viên thất bại!");</script>';
         }
     } else {
         echo '<script type="text/javascript">alert("Có lỗi xảy ra!");</script>';
@@ -31,9 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$product = new product();
-$list = $product->getAllAdmin((isset($_GET['page']) ? $_GET['page'] : 1));
-$pageCount = $product->getCountPaging();
+$staff = new staff();
+$list = $staff->getAllAdmin((isset($_GET['page']) ? $_GET['page'] : 1));
+$pageCount = $staff->getCountPaging();
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +47,7 @@ $pageCount = $product->getCountPaging();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://use.fontawesome.com/2145adbb48.js"></script>
     <script src="https://kit.fontawesome.com/a42aeb5b72.js" crossorigin="anonymous"></script>
-    <title>Danh sách sản phẩm</title>
+    <title>Danh sách danh mục</title>
 </head>
 
 <body>
@@ -56,19 +56,16 @@ $pageCount = $product->getCountPaging();
         <label for="check" class="checkbtn">
             <i class="fas fa-bars"></i>
         </label>
-        <label class="logo">ADMIN</label>
+        <label class="logo">MANAGER</label>
         <ul>
-            <li><a href="productlist.php" class="active">Quản lý Sản phẩm</a></li>
-            <li><a href="categoriesList.php">Quản lý Danh mục</a></li>
-            <li><a href="orderlist.php">Quản lý Đơn hàng</a></li>
-            <li><a href="stafflist.php">Quản lý Nhân viên</a></li>
+            <li><a href="stafflist.php" class="active">Quản lý Nhân viên</a></li>
         </ul>
     </nav>
     <div class="title">
-        <h1>Danh sách sản phẩm</h1>
+        <h1>Danh sách danh mục</h1>
     </div>
     <div class="addNew">
-        <a href="add_product.php">Thêm mới</a>
+        <a href="add_staff.php">Thêm mới</a>
     </div>
     <div class="container">
         <?php $count = 1;
@@ -76,35 +73,33 @@ $pageCount = $product->getCountPaging();
             <table class="list">
                 <tr>
                     <th>STT</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Hình ảnh</th>
-                    <th>Giá gốc</th>
-                    <th>Giá khuyến mãi</th>
-                    <th>Tạo bởi</th>
-                    <th>Số lượng</th>
+                    <th>Tên nhân viên</th>
+                    <th>Ngày sinh</th>
+                    <th>Email</th>
+                    <th>Mật khẩu</th>
+                    <th>Địa chỉ</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                 </tr>
                 <?php foreach ($list as $key => $value) { ?>
                     <tr>
                         <td><?= $count++ ?></td>
-                        <td><?= $value['name'] ?></td>
-                        <td><img class="image-cart" src="uploads/<?= $value['image'] ?>" alt=""></td>
-                        <td><?= number_format($value['originalPrice'], 0, '', ',') ?> VND</td>
-                        <td><?= number_format($value['promotionPrice'], 0, '', ',') ?> VND</td>
-                        <td><?= $value['fullName'] ?></td>
-                        <td><?= $value['qty'] ?></td>
+                        <td><?= $value['fullname'] ?></td>
+                        <td><?= $value['dob'] ?></td>
+                        <td><?= $value['email'] ?></td>
+                        <td><?= $value['password'] ?></td>
+                        <td><?= $value['address'] ?></td>
                         <td><?= ($value['status']) ? "Active" : "Block" ?></td>
                         <td>
-                            <a href="edit_product.php?id=<?= $value['id'] ?>">Xem/Sửa</a>
+                            <a href="edit_staff.php?id=<?= $value['id'] ?>">Xem/Sửa</a>
                             <?php
                             if ($value['status']) { ?>
-                                <form action="productlist.php" method="post">
+                                <form action="stafflist.php" method="post">
                                     <input type="text" name="id" hidden value="<?= $value['id'] ?>" style="display: none;">
                                     <input type="submit" value="Khóa" name="block">
                                 </form>
                             <?php } else { ?>
-                                <form action="productlist.php" method="post">
+                                <form action="stafflist.php" method="post">
                                     <input type="text" name="id" hidden value="<?= $value['id'] ?>" style="display: none;">
                                     <input type="submit" value="Mở" name="active">
                                 </form>
@@ -114,28 +109,28 @@ $pageCount = $product->getCountPaging();
                 <?php } ?>
             </table>
         <?php } else { ?>
-            <h3>Chưa có sản phẩm nào...</h3>
+            <h3>Chưa có nhân viên nào...</h3>
         <?php } ?>
         <div class="pagination">
-            <a href="productlist.php?page=<?= (isset($_GET['page'])) ? (($_GET['page'] <= 1) ? 1 : $_GET['page'] - 1) : 1 ?>">&laquo;</a>
+            <a href="stafflist.php?page=<?= (isset($_GET['page'])) ? (($_GET['page'] <= 1) ? 1 : $_GET['page'] - 1) : 1 ?>">&laquo;</a>
             <?php
             for ($i = 1; $i <= $pageCount; $i++) {
                 if (isset($_GET['page'])) {
                     if ($i == $_GET['page']) { ?>
-                        <a class="active" href="productlist.php?page=<?= $i ?>"><?= $i ?></a>
+                        <a class="active" href="stafflist.php?page=<?= $i ?>"><?= $i ?></a>
                     <?php } else { ?>
-                        <a href="productlist.php?page=<?= $i ?>"><?= $i ?></a>
+                        <a href="stafflist.php?page=<?= $i ?>"><?= $i ?></a>
                     <?php  }
                 } else {
                     if ($i == 1) { ?>
-                        <a class="active" href="productlist.php?page=<?= $i ?>"><?= $i ?></a>
+                        <a class="active" href="stafflist.php?page=<?= $i ?>"><?= $i ?></a>
                     <?php  } else { ?>
-                        <a href="productlist.php?page=<?= $i ?>"><?= $i ?></a>
+                        <a href="stafflist.php?page=<?= $i ?>"><?= $i ?></a>
                     <?php   } ?>
                 <?php  } ?>
             <?php }
             ?>
-            <a href="productlist.php?page=<?= (isset($_GET['page'])) ? $_GET['page'] + 1 : 2 ?>">&raquo;</a>
+            <a href="stafflist.php?page=<?= (isset($_GET['page'])) ? $_GET['page'] + 1 : 2 ?>">&raquo;</a>
         </div>
     </div>
     </div>

@@ -41,6 +41,8 @@ $completeOrderList = $order->getCompleteOrder();
             <li><a href="productlist.php">Quản lý Sản phẩm</a></li>
             <li><a href="categoriesList.php">Quản lý Danh mục</a></li>
             <li><a href="orderlist.php" class="active">Quản lý Đơn hàng</a></li>
+            <li><a href="stafflist.php">Quản lý Nhân viên</a></li>
+        </ul>
         </ul>
     </nav>
     <div class="title">
