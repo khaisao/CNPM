@@ -35,9 +35,9 @@ class user
 			if($value['role_id'] == 2){
 				header("Location:index.php");
 			}
-			// if($value['role_id'] == 1){
-			// 	header("location:admin/index.php");
-			// }
+			if($value['role_id'] == 1){
+				header("location:admin/index.php");
+			}
 			if($value['role_id'] == 3){
 				header("location:manager/index.php");
 			}
