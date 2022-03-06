@@ -41,6 +41,8 @@ $order_result = $order->getById($result[0]['orderId']);
             <li><a href="productlist.php">Quản lý Sản phẩm</a></li>
             <li><a href="categoriesList.php">Quản lý Danh mục</a></li>
             <li><a href="orderlist.php" class="active">Quản lý Đơn hàng</a></li>
+            <li><a href="stafflist.php">Quản lý Nhân viên</a></li>
+        </ul>
         </ul>
     </nav>
     <div class="title">
@@ -83,7 +85,7 @@ $order_result = $order->getById($result[0]['orderId']);
     </div>
     
     <footer>
-        <p class="copyright">STORENOW @ 2021</p>
+        <p class="copyright">COMPUTERSTORE @ 2021</p>
     </footer>
 </body>
 

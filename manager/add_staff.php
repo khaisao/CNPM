@@ -1,20 +1,16 @@
 <?php
 include '../lib/session.php';
-include '../classes/product.php';
-include '../classes/categories.php';
-Session::checkSession('admin');
+include '../classes/staff.php';
+Session::checkSession('manager');
 $role_id = Session::get('role_id');
-if ($role_id == 1) {
+if ($role_id == 4) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-        $product = new product();
-        $result = $product->insert($_POST, $_FILES);
+        $staff = new staff();
+        $result = $staff->insert($_POST, $_FILES);
     }
 } else {
     header("Location:../index.php");
 }
-
-$category = new categories();
-$categoriesList = $category->getAll();
 ?>
 
 
@@ -29,7 +25,7 @@ $categoriesList = $category->getAll();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://use.fontawesome.com/2145adbb48.js"></script>
     <script src="https://kit.fontawesome.com/a42aeb5b72.js" crossorigin="anonymous"></script>
-    <title>Thêm mới sản phẩm</title>
+    <title>Thêm mới nhân viên</title>
 </head>
 
 <body>
@@ -38,23 +34,20 @@ $categoriesList = $category->getAll();
         <label for="check" class="checkbtn">
             <i class="fas fa-bars"></i>
         </label>
-        <label class="logo">ADMIN</label>
+        <label class="logo">MANAGER</label>
         <ul>
-            <li><a href="productlist.php" class="active">Quản lý Sản phẩm</a></li>
-            <li><a href="categoriesList.php" >Quản lý danh mục</a></li>
-            <li><a href="orderlist.php">Quản lý Đơn hàng</a></li>
             <li><a href="stafflist.php">Quản lý Nhân viên</a></li>
         </ul>
     </nav>
     <div class="title">
-        <h1>Thêm mới sản phẩm</h1>
+        <h1>Thêm mới nhân viên</h1>
     </div>
     <div class="container">
         <p style="color: green;"><?= !empty($result) ? $result : '' ?></p>
         <div class="form-add">
-            <form action="add_product.php" method="post" enctype="multipart/form-data">
+            <form action="add_staff.php" method="post" enctype="multipart/form-data">
                 <label for="name">Tên sản phẩm</label>
-                <input type="text" id="name" name="name" placeholder="Tên sản phẩm.." required>
+                <input type="text" id="fullname" name="fullname" placeholder="Tên nhân viên.." required>
 
                 <label for="originalPrice">Giá gốc</label>
                 <input type="number" id="originalPrice" name="originalPrice" placeholder="Giá.." required min="1">

@@ -31,7 +31,7 @@ $categoriesList = $categories->getAll();
 
 <body>
     <nav>
-        <label class="logo">STORENOW</label>
+        <label class="logo">COMPUTERSTORE</label>
         <ul>
             <li><a href="index.php">Trang chủ</a></li>
             <li><a href="productList.php" class="active">Sản phẩm</a></li>
@@ -149,7 +149,7 @@ $categoriesList = $categories->getAll();
                 <a href="productList.php">Sản Phẩm</a>
             </li>
         </ul>
-        <p class="copyright">STORENOW @ 2021</p>
+        <p class="copyright">COMPUTERSTORE  @ 2021</p>
     </footer>
 </body>
 

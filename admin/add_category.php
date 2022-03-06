@@ -39,6 +39,7 @@ if ($role_id == 1) {
             <li><a href="productlist.php" >Quản lý Sản phẩm</a></li>
             <li><a href="categoriesList.php" class="active" >Quản lý danh mục</a></li>
             <li><a href="orderlist.php">Quản lý Đơn hàng</a></li>
+            <li><a href="stafflist.php">Quản lý Nhân viên</a></li>
         </ul>
     </nav>
     <div class="title">
@@ -57,7 +58,7 @@ if ($role_id == 1) {
     </div>
     </div>
     <footer>
-        <p class="copyright">STORENOW @ 2021</p>
+        <p class="copyright">COMPUTERSTORE @ 2021</p>
     </footer>
 </body>
 
