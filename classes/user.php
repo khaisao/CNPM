@@ -4,6 +4,8 @@ include_once($filepath . '/../lib/session.php');
 include_once($filepath . '/../lib/database.php');
 include_once($filepath . '/../lib/PHPMailer.php');
 include_once($filepath . '/../lib/SMTP.php');
+$conn= mysqli_connect("localhost","root","","computerstore");
+mysqli_set_charset($conn,"utf8");
 
 use PHPMailer\PHPMailer\PHPMailer;
 ?>
@@ -24,12 +26,22 @@ class user
 	{
 		$query = "SELECT * FROM users WHERE email = '$email' AND password = '$password' LIMIT 1 ";
 		$result = $this->db->select($query);
+
 		if ($result) {
 			$value = $result->fetch_assoc();
 			Session::set('user', true);
 			Session::set('userId', $value['id']);
 			Session::set('role_id', $value['role_id']);
-			header("Location:index.php");
+			if($value['role_id'] == 2){
+				header("Location:index.php");
+			}
+			if($value['role_id'] == 1){
+				header("location:admin/index.php");
+			}
+			if($value['role_id'] == 3){
+				header("location:manager/index.php");
+			}
+		
 		} else {
 			$alert = "Tên đăng nhập hoặc mật khẩu không đúng!";
 			return $alert;
@@ -72,9 +84,9 @@ class user
 				$mail->IsHTML(true);
 				$mail->CharSet = 'UTF-8';
 				$mail->AddAddress($email, "recipient-name");
-				$mail->SetFrom("khailovesao@gmail.com", "Instrument Store");
-				$mail->Subject = "Xác nhận email tài khoản - Instruments Store";
-				$mail->Body = "<h3>Cảm ơn bạn đã đăng ký tài khoản tại website InstrumentStore</h3></br>Đây là mã xác minh tài khoản của bạn: " . $captcha . "";
+				$mail->SetFrom("khailovesao@gmail.com", "Computer Store");
+				$mail->Subject = "Xác nhận email tài khoản - Computers Store";
+				$mail->Body = "<h3>Cảm ơn bạn đã đăng ký tài khoản tại website ComputerStore</h3></br>Đây là mã xác minh tài khoản của bạn: " . $captcha . "";
 
 				$mail->Send();
 

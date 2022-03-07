@@ -2,6 +2,8 @@
 include '../lib/session.php';
 include '../classes/staff.php';
 Session::checkSession('manager');
+$conn= mysqli_connect("localhost","root","","computerstore");
+mysqli_set_charset($conn,"utf8");
 $role_id = Session::get('role_id');
 if ($role_id == 3) {
     # code...
@@ -81,32 +83,36 @@ $pageCount = $staff->getCountPaging();
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                 </tr>
-                <?php foreach ($list as $key => $value) { ?>
+                <?php
+       $sql_post = "select * from users";
+       $query = mysqli_query($conn, $sql_post);
+        while($pro = mysqli_fetch_assoc($query)){
+        ?> 
                     <tr>
                         <td><?= $count++ ?></td>
-                        <td><?= $value['fullname'] ?></td>
-                        <td><?= $value['dob'] ?></td>
-                        <td><?= $value['email'] ?></td>
-                        <td><?= $value['password'] ?></td>
-                        <td><?= $value['address'] ?></td>
-                        <td><?= ($value['status']) ? "Active" : "Block" ?></td>
+                        <td><?php echo $pro["fullname"] ?></td>
+                        <td><?= $pro['dob'] ?></td>
+                        <td><?= $pro['email'] ?></td>
+                        <td><?= $pro['password'] ?></td>
+                        <td><?= $pro['address'] ?></td>
+                        <td><?= ($pro['status']) ? "Active" : "Block" ?></td>
                         <td>
                             <a href="edit_staff.php?id=<?= $value['id'] ?>">Xem/Sửa</a>
                             <?php
-                            if ($value['status']) { ?>
+                            if ($pro['status']) { ?>
                                 <form action="stafflist.php" method="post">
-                                    <input type="text" name="id" hidden value="<?= $value['id'] ?>" style="display: none;">
+                                    <input type="text" name="id" hidden value="<?= $pro['id'] ?>" style="display: none;">
                                     <input type="submit" value="Khóa" name="block">
                                 </form>
                             <?php } else { ?>
                                 <form action="stafflist.php" method="post">
-                                    <input type="text" name="id" hidden value="<?= $value['id'] ?>" style="display: none;">
+                                    <input type="text" name="id" hidden value="<?= $pro['id'] ?>" style="display: none;">
                                     <input type="submit" value="Mở" name="active">
                                 </form>
                             <?php } ?>
                         </td>
                     </tr>
-                <?php } ?>
+                    <?php } ?>
             </table>
         <?php } else { ?>
             <h3>Chưa có nhân viên nào...</h3>

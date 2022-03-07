@@ -125,11 +125,7 @@ $userInfo = $user->get();
                 <a href="productList.php">Sản Phẩm</a>
             </li>
         </ul>
-<<<<<<< HEAD
         <p class="copyright">COMPUTERSTORE @ 2021</p>
-=======
-        <p class="copyright">STORENOW @ 2021</p>
->>>>>>> 7e4ceff500d7e2d597b75a2fd83b93f4a402c434
     </footer>
 </body>
 <script type="text/javascript">
