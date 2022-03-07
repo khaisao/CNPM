@@ -2,7 +2,7 @@
 include '../lib/session.php';
 Session::checkSession('manager');
 $role_id = Session::get('role_id');
-if ($role_id == 4) {
+if ($role_id == 3) {
     header("Location:stafflist.php");
 } else {
     header("Location:../index.php");
