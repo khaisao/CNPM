@@ -7,6 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $userId = $user->getLastUserId(); 
         header("Location:./confirm.php?id=".$userId['id']."");
     }
+    else{?>
+        <script>
+    alert ("Email này đã được đăng ký!");
+    </script>
+  <?php
+    }
 }
 ?>
 

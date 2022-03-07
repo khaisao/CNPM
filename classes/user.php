@@ -60,8 +60,9 @@ class user
 		$check_email = "SELECT * FROM users WHERE email='$email' LIMIT 1";
 		$result_check = $this->db->select($check_email);
 		if ($result_check) {
-			return 'Email đã tồn tại!';
-		} else {
+			return false;
+		} 
+		else {
 			// Genarate captcha
 			$captcha = rand(10000, 99999);
 
