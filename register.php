@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     else{?>
         <script>
-    alert ("Email này đã được đăng ký!");
+            alert ("Email này đã được đăng ký!");
     </script>
   <?php
     }
