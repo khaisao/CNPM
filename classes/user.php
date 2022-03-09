@@ -4,9 +4,6 @@ include_once($filepath . '/../lib/session.php');
 include_once($filepath . '/../lib/database.php');
 include_once($filepath . '/../lib/PHPMailer.php');
 include_once($filepath . '/../lib/SMTP.php');
-$conn= mysqli_connect("localhost","root","","computerstore");
-mysqli_set_charset($conn,"utf8");
-
 use PHPMailer\PHPMailer\PHPMailer;
 ?>
 
@@ -19,27 +16,31 @@ class user
 	private $db;
 	public function __construct()
 	{
-		$this->db = new Database();
-	}
+		$this->db = new Database();	}
 
 	public function login($email, $password)
 	{
-		$query = "SELECT * FROM users WHERE email = '$email' AND password = '$password' LIMIT 1 ";
+		$query = "SELECT * FROM users WHERE email = '$email' ";
 		$result = $this->db->select($query);
-
 		if ($result) {
 			$value = $result->fetch_assoc();
 			Session::set('user', true);
 			Session::set('userId', $value['id']);
 			Session::set('role_id', $value['role_id']);
-			if($value['role_id'] == 2){
+			if($value['role_id'] == 2 && password_verify($password,$value['password'])){
 				header("Location:index.php");
 			}
-			if($value['role_id'] == 1){
+			
+			if($value['role_id'] == 1 && password_verify($password,$value['password'])){
 				header("location:admin/index.php");
 			}
-			if($value['role_id'] == 3){
+			
+			if($value['role_id'] == 3 && password_verify($password,$value['password'])){
 				header("location:manager/index.php");
+			}
+			if(password_verify($password,$value['password'])==false){
+				$alert = "Tên đăng nhập hoặc mật khẩu không đúng!";
+				return $alert;
 			}
 		
 		} else {
@@ -60,8 +61,9 @@ class user
 		$check_email = "SELECT * FROM users WHERE email='$email' LIMIT 1";
 		$result_check = $this->db->select($check_email);
 		if ($result_check) {
-			return 'Email đã tồn tại!';
-		} else {
+			return false;
+		} 
+		else {
 			// Genarate captcha
 			$captcha = rand(10000, 99999);
 

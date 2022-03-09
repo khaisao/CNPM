@@ -3,7 +3,7 @@ include 'classes/user.php';
 $user = new user();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
-    $password = md5($_POST['password']);
+    $password = ($_POST['password']);
     $login_check = $user->login($email, $password);
 }
 ?>
