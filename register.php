@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="email" id="email" name="email" placeholder="Email..." required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
 
                 <label for="password">Mật khẩu</label>
-                <input type="password" id="password" name="password" placeholder="Mật khẩu..." required>
+                <input type="password" id="password" name="password" placeholder="Mật khẩu..." required oninput="check_format(this)" >
 
                 <label for="repassword">Nhập lại mật khẩu</label>
                 <input type="password" id="repassword" name="repassword" required placeholder="Nhập lại mật khẩu..." oninput="check(this)">
@@ -103,6 +103,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             input.setCustomValidity('Password Must be Matching.');
         }else{
             input.setCustomValidity('');
+        }
+    }
+    function check_format(input) {
+        var passw =  /^[A-Za-z]\w{7,14}$/;
+        if (input.value.match(passw)) {
+            input.setCustomValidity('');
+        }else{
+            input.setCustomValidity('Password is not in the correct format');
         }
     }
 </script>
