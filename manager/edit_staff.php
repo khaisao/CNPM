@@ -1,18 +1,8 @@
 <?php
 include '../lib/session.php';
 include '../classes/staff.php';
-Session::checkSession('manager');
-$role_id = Session::get('role_id');
-if ($role_id == 3) {
-    $staff = new staff();
-    $staffUpdate = mysqli_fetch_assoc($staff->getStaffbyIdAdmin($_GET['id']));
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-        $result = $staff->update($_POST, $_FILES);
-        $staffUpdate = mysqli_fetch_assoc($staff->getStaffbyIdAdmin($_GET['id']));
-    }
-} else {
-    header("Location:../index.php");
-}
+$staff = new staff();
+$result = $staff->getStaffbyId($_GET['id']);
 
 ?>
 
@@ -53,24 +43,19 @@ if ($role_id == 3) {
         ?>
         <div class="form-add">
             <form action="edit_staff.php?id=<?= $staffUpdate['id'] ?>" method="post">
-                <input type="text" hidden name="id" style="display: none;" value="<?= $staffUpdate['id'] ?>">
+                <input type="text" hidden name="id" style="display: none;" value="<?= $result['id'] ?>">
                 <label for="fullname">Tên nhân viên</label>
-                <input type="text" id="fullname" name="fullname" placeholder="Tên nhân viên.." value="<?= $staffUpdate['fullname'] ?>">
+                <input type="text" id="fullname" name="fullname" placeholder="Tên nhân viên.." value="<?= $result['fullname'] ?>">
 
                 <label for="email">Email</label>
-                <input type="text" id="email" name="email" value="<?= $staffUpdate['email'] ?>">
+                <input type="text" id="email" name="email" value="<?= $result['email'] ?>">
 
                 <label for="password">Password</label>
-                <input type="text" id="password" name="password" value="<?= $staffUpdate['password'] ?>">
+                <input type="text" id="password" name="password">
 
-                <label for="dob">Password</label>
-                <input type="date" id="dob" name="dob" value="<?= $staffUpdate['dob'] ?>">
-                
-                <label for="role_id">Chức vụ</label>
-                <input type="int" id="role_id" name="role_id" value="<?= $staffUpdate['role_id'] ?>">
+                <label for="dob">Ngày sinh</label>
+                <input type="date" id="dob" name="dob" value="<?= $result['dob'] ?>">
 
-                <label for="address">Password</label>
-                <input type="text" id="address" name="address" value="<?= $staffUpdate['address'] ?>">
 
                 <input type="submit" value="Lưu" name="submit">
             </form>

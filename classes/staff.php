@@ -21,8 +21,9 @@ class staff
         $fullname = $data['fullname'];  
         $email = $data['email'];
         $dob = $data['dob'];
-        $password = $data['password'];
         $address = $data['address'];
+        $password=password_hash($data['password'],PASSWORD_DEFAULT);
+
 
 
         // Check image and move to upload folder
@@ -127,7 +128,16 @@ class staff
     //    }
     //    return false;
     //}
-
+    public function getStaffbyId($id)
+    {
+        $query = "SELECT * FROM users where id = '$id' ";
+        $mysqli_result = $this->db->select($query);
+        if ($mysqli_result) {
+            $result = mysqli_fetch_all($this->db->select($query), MYSQLI_ASSOC)[0];
+            return $result;
+        }
+        return false;
+    }
     public function update($data, $files)
     {
         $fullname = $data['fullname'];  

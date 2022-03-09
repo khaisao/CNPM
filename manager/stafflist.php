@@ -78,7 +78,6 @@ $pageCount = $staff->getCountPaging();
                     <th>Tên nhân viên</th>
                     <th>Ngày sinh</th>
                     <th>Email</th>
-                    <th>Mật khẩu</th>
                     <th>Địa chỉ</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -93,11 +92,10 @@ $pageCount = $staff->getCountPaging();
                         <td><?php echo $pro["fullname"] ?></td>
                         <td><?= $pro['dob'] ?></td>
                         <td><?= $pro['email'] ?></td>
-                        <td><?= $pro['password'] ?></td>
                         <td><?= $pro['address'] ?></td>
                         <td><?= ($pro['status']) ? "Active" : "Block" ?></td>
                         <td>
-                            <a href="edit_staff.php?id=<?= $value['id'] ?>">Xem/Sửa</a>
+                            <a href="edit_staff.php?id=<?= $pro['id'] ?>">Xem/Sửa</a>
                             <?php
                             if ($pro['status']) { ?>
                                 <form action="stafflist.php" method="post">

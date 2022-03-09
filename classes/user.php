@@ -55,7 +55,7 @@ class user
 		$email = $data['email'];
 		$dob = $data['dob'];
 		$address = $data['address'];
-		$password = md5($data['password']);	
+		$password=password_hash($data['password'],PASSWORD_DEFAULT);
 
 
 		$check_email = "SELECT * FROM users WHERE email='$email' LIMIT 1";
