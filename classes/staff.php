@@ -98,17 +98,15 @@ class staff
     //    return false;
     //}
 
-    //public function getFeaturedProducts()
-    //{
-    //    $query =
-    //        "SELECT *
-	//		 FROM products
-	//		 WHERE products.status = 1
-    //         order by products.soldCount DESC
-    //         LIMIT 8";
-    //    $result = $this->db->select($query);
-    //    return $result;
-    //}
+    public function getAllStaff()
+    {
+       $query =
+           "SELECT *
+			 FROM users
+			 WHERE role_id = 1";
+       $result = $this->db->select($query);
+       return $result;
+    }
 
     //public function getProductsByCateId($page = 1, $cateId, $total = 8)
     //{
@@ -138,23 +136,34 @@ class staff
         }
         return false;
     }
-    public function update($data, $files)
+    public function update($data)
     {
         $fullname = $data['fullname'];  
-        $dob = $data['dob'];
         $email = $data['email'];
-        $password = $data['password'];     
         $address = $data['address'];
+        $dob = $data['dob'];
+        if($data['password'] != ''){
+            $password=password_hash($data['password'],PASSWORD_DEFAULT); 
+            $query = "UPDATE users SET 
+            fullname ='$fullname',
+            dob = '$dob',
+            email = '$email',
+            password = '$password',
+            address = '$address'
+            WHERE id = " . $data['id'] . " ";
+        }
+        if($data['password'] == ''){
+            $password=password_hash($data['password'],PASSWORD_DEFAULT); 
+            $query = "UPDATE users SET 
+            fullname ='$fullname',
+            dob = '$dob',
+            email = '$email',
+            address = '$address'
+            WHERE id = " . $data['id'] . " ";
+        }
+        
        
-        $query = "UPDATE users SET 
-				fullname ='$fullname',
-				dob = '$dob',
-				email = '$email',
-				password = '$password',
-				address = '$address',
-				WHERE id = " . $data['id'] . " ";
-        
-        
+
         $result = $this->db->update($query);
         if ($result) {
             $alert = "<span class='success'>Cập nhật sản phẩm thành công</span>";
