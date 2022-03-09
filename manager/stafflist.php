@@ -10,7 +10,7 @@ if ($role_id == 3) {
 } else {
     header("Location:../index.php");
 }
-
+    
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $staff = new staff();
     if (isset($_POST['block'])) {

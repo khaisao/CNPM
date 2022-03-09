@@ -45,33 +45,24 @@ if ($role_id == 3) {
     <div class="container">
         <p style="color: green;"><?= !empty($result) ? $result : '' ?></p>
         <div class="form-add">
-            <form action="add_staff.php" method="post" enctype="multipart/form-data">
-                <label for="name">Tên sản phẩm</label>
+            <form action="add_staff.php" method="post"  >
+                <label for="fullname">Tên nhân viên</label>
                 <input type="text" id="fullname" name="fullname" placeholder="Tên nhân viên.." required>
 
-                <label for="originalPrice">Giá gốc</label>
-                <input type="number" id="originalPrice" name="originalPrice" placeholder="Giá.." required min="1">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" placeholder="Email.." required min="1">
 
-                <label for="promotionPrice">Giá khuyến mãi</label>
-                <input type="number" id="promotionPrice" name="promotionPrice" placeholder="Giá.." required min="1">
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password" placeholder="Password.." required min="1">
 
-                <label for="image">Hình ảnh</label>
-                <input type="file" id="image" name="image" required>
+                <label for="dob">Ngày sinh</label>
+                <input type="date" id="dob" name="dob" placeholder="Ngày sinh.." required min="1">
 
-                <label for="cateId">Loại sản phẩm</label>
-                <select id="cateId" name="cateId">
-                    <?php
-                    foreach ($categoriesList as $key => $value) { ?>
-                        <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
-                    <?php }
-                    ?>
-                </select>
+                <label for="role_id">Chức vụ</label>
+                <input type="text" id="role_id" name="role_id" placeholder="Chức vụ.." required>
 
-                <label for="qty">Số lượng</label>
-                <input type="number" id="qty" name="qty" required min="1">
-
-                <label for="des">Mô tả</label>
-                <textarea name="des" id="des" cols="30" rows="10" required></textarea>
+                <label for="address">Địa chỉ</label>
+                <input type="text" id="address" name="address" placeholder="Địa chỉ.." required min="1">
 
                 <input type="submit" value="Lưu" name="submit">
             </form>
