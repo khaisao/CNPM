@@ -1,3 +1,19 @@
+<?php
+include 'classes/user.php';
+$user = new user();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $result = $user->forgot_pass($_POST);  
+    if ($result == true) {
+        header("Location:login.php");
+    }
+    else{?>
+        <script>
+            alert ("Email này chưa được đăng ký!");
+        </script>
+  <?php
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +38,7 @@
     </div>
     <div class="container-single">
         <div class="login">
-            <form action="forgot_submit.php" method="post" class="form-login">
+            <form action="forgot_password.php" method="post" class="form-login">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email..." required>
                 <p style="color: red;"><?= !empty($login_check) ? $login_check : '' ?></p>

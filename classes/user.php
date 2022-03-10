@@ -59,8 +59,8 @@ class user
 
 
 		$check_email = "SELECT * FROM users WHERE email='$email' LIMIT 1";
-		$result_check = $this->db->select($check_email);
-		if ($result_check) {
+		$result = $this->db->select($check_email);
+		if ($result) {
 			return false;
 		} 
 		else {
@@ -91,12 +91,45 @@ class user
 				$mail->Body = "<h3>Cảm ơn bạn đã đăng ký tài khoản tại website ComputerStore</h3></br>Đây là mã xác minh tài khoản của bạn: " . $captcha . "";
 
 				$mail->Send();
-
+				header("Location:/index.php");
 				return true;
-			} else {
-				return false;
 			}
 		}
+	}
+	public function forgot_pass($data)
+	{
+		$email = $data['email'];
+		$check_email = "SELECT * FROM users WHERE email='$email'";
+		$result = $this->db->select($check_email);
+		if ($result) {
+			$captcha = rand(1000000, 9999999);
+			$password=password_hash($captcha,PASSWORD_DEFAULT);
+			$query = "UPDATE users SET password = '$password' WHERE email = '$email'";
+			$result = $this->db->update($query);
+			if ($result) {
+				$mail = new PHPMailer();
+				$mail->IsSMTP();
+				$mail->Mailer = "smtp";
+
+				$mail->SMTPDebug  = 0;
+				$mail->SMTPAuth   = TRUE;
+				$mail->SMTPSecure = "tls";
+				$mail->Port       = 587;
+				$mail->Host       = "smtp.gmail.com";
+				$mail->Username   = "khailovesao@gmail.com";
+				$mail->Password   = "pwplbbfimiyvmfzs";
+
+				$mail->IsHTML(true);
+				$mail->CharSet = 'UTF-8';
+				$mail->AddAddress($email, "recipient-name");
+				$mail->SetFrom("khailovesao@gmail.com", "Computer Store");
+				$mail->Subject = "Quên mật khẩu - Computers Store";
+				$mail->Body = "Mật khẩu mới của bạn là: $captcha";
+				$mail->Send();
+				return true;
+			}
+			return true;
+		} 
 	}
 
 	public function get()
