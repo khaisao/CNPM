@@ -16,16 +16,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['block'])) {
         $result = $staff->block($_POST['id']);
         if ($result) {
-            echo '<script type="text/javascript">alert("Khóa nhân viên thành công!");</script>';
+            header("location:stafflist.php");
         } else {
-            echo '<script type="text/javascript">alert("Khóa nhân viên thất bại!");</script>';
+            header("location:stafflist.php");
+
         }
     } else if (isset($_POST['active'])) {
         $result = $staff->active($_POST['id']);
         if ($result) {
-            echo '<script type="text/javascript">alert("Kích hoạt nhân viên thành công!");</script>';
+            header("location:stafflist.php");
         } else {
-            echo '<script type="text/javascript">alert("Kích hoạt nhân viên thất bại!");</script>';
+            header("location:stafflist.php");
         }
     } else {
         echo '<script type="text/javascript">alert("Có lỗi xảy ra!");</script>';

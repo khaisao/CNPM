@@ -27,15 +27,15 @@ class user
 			Session::set('user', true);
 			Session::set('userId', $value['id']);
 			Session::set('role_id', $value['role_id']);
-			if($value['role_id'] == 2 && password_verify($password,$value['password'])){
+			if($value['role_id'] == 2 && password_verify($password,$value['password']) && $value['status'] == 1){
 				header("Location:index.php");
 			}
 			
-			if($value['role_id'] == 1 && password_verify($password,$value['password'])){
+			if($value['role_id'] == 1 && password_verify($password,$value['password'])  && $value['status'] == 1){
 				header("location:admin/index.php");
 			}
 			
-			if($value['role_id'] == 3 && password_verify($password,$value['password'])){
+			if($value['role_id'] == 3 && password_verify($password,$value['password']) && $value['status'] == 1){
 				header("location:manager/index.php");
 			}
 			if(password_verify($password,$value['password'])==false){
